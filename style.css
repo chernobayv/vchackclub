@@ -53,9 +53,8 @@ a { color: inherit; }
 
 /* ===== INTRO TEXT ===== */
 .intro-text {
-  margin-top: -20px;
   position: absolute;
-  left: 427px; top: 279px;
+  left: 427px; top: 250px;
   width: 426px;
   font-size: 20px; line-height: 1.5;
   font-style: normal;
@@ -83,7 +82,7 @@ a { color: inherit; }
 /* ===== FRC SECTION TEXT ===== */
 .frc-text {
   position: absolute;
-  left: 774px; top: 774px;
+  left: 774px; top: 700px;
   width: 426px;
   font-style: normal;
 }
