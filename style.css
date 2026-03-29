@@ -106,7 +106,7 @@ a { color: inherit; }
   font-size: 20px; line-height: 1.5;
 }
 .frc-text .move-hint {
-  margin-top: 16px;
+  margin-top: 0px;
 }
 
 /* ===== DRAGGABLE GRID ===== */
