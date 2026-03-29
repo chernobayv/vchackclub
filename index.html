@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victoria Chernobay — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="page-wrapper">
+  <div class="page-content">
+
+    <!-- Laptop image -->
+    <img class="laptop-img" src="assets/laptop.png" alt="" />
+
+    <!-- Hero banner (rotated) -->
+    <div class="hero-banner">
+      <div class="hero-banner-inner">
+        <img src="assets/rectangle1.png" alt="" />
+      </div>
+    </div>
+
+    <!-- Intro text -->
+    <div class="intro-text">
+      <p>After the hack club interview, I knew I needed to send links to my projects. What better way than to show you what I can do and send them in a custom portfolio?</p>
+      <br /><br />
+      <p>Scroll to learn more about why im the perfect hacker for the job! :)</p>
+    </div>
+
+    <!-- Accent strip (rotated) -->
+    <div class="accent-strip">
+      <div class="accent-strip-inner">
+        <img src="assets/rectangle1.png" alt="" />
+      </div>
+    </div>
+
+    <!-- FRC section text -->
+    <div class="frc-text">
+      <h2>FRC 9262:</h2>
+      <p>
+<br />One of my biggest (and favorite) projects would be frc 9262, I single-handedly ran and managed a student-led robotics team with 100+ people in and out, winning rookie of the year in 23' and 10th in the province in 24'</p>
+      <p>&nbsp;</p>
+      <p>what did I do?</p>
+      <ul>
+        <li>founder &amp; president for 3 years</li>
+        <li>ran electrical, computer vision, strategy</li>
+        <li>created swag including hoodie design</li>
+        <li>marketing for club &amp; team meeting</li>
+        <li>helped run the Girls in STEM event running workshops with 150 attendees</li>
+        <li>spoke at the TD Synnex Gala raising $300,000 for FIRST + Kids Help Phone</li>
+      </ul>
+      <p class="move-hint">&lt; move around the images :)</p>
+    </div>
+
+    <!-- Draggable photo grid -->
+    <div class="drag-grid" id="dragGrid"></div>
+
+    <!-- Game section background -->
+    <div class="game-bg">
+      <img src="assets/rectangle13.png" alt="" />
+    </div>
+
+    <!-- Minesweeper embed -->
+    <div class="gamebox">
+      <iframe src="https://minesweeper--chernobayv05.replit.app" title="Minesweeper Game" allow="fullscreen" scrolling="no"></iframe>
+    </div>
+
+    <!-- Minesweeper title + GitHub button -->
+    <div class="minesweeper-row">
+      <div class="minesweeper-title">
+        <img src="assets/minesweeper.png" alt="MINESWEEPER" />
+      </div>
+      <a class="github-btn" href="https://github.com/chernobayv/minesweeper/blob/main/ChernobayVictoriaInstructionManual.pdf" target="_blank" rel="noopener noreferrer">open github</a>
+    </div>
+
+    <!-- Projects panel -->
+    <div class="projects-panel">
+      <div class="panel-header">
+        <h3>Projects</h3>
+        <p class="sub">click to learn more</p>
+      </div>
+      <div class="panel-list" id="projectsList"></div>
+    </div>
+
+    <!-- Victoria AI panel -->
+    <div class="ai-panel">
+      <div class="ai-header">
+        <div>
+          <h3>Victoria.ai</h3>
+          <p class="sub">trained on my resume, projects &amp; job descriptions</p>
+        </div>
+        <a class="powered" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">powered by gemini</a>
+      </div>
+      <div class="ai-messages" id="aiMessages">
+        <div class="msg bot"><div class="bubble">Hey! I'm Victoria's AI assistant — ask me anything about her experience, skills, or projects!</div></div>
+      </div>
+      <div class="suggested-q" id="suggestedQ">
+        <button onclick="sendMessage('What are your skills?')">What are your skills?</button>
+        <button onclick="sendMessage('Tell me about FRC')">Tell me about FRC</button>
+        <button onclick="sendMessage('Why Hack Club?')">Why Hack Club?</button>
+        <button onclick="sendMessage('Current projects?')">Current projects?</button>
+      </div>
+      <div class="ai-input-wrap">
+        <input type="text" id="aiInput" placeholder="ask me anything... (press enter)" />
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p class="find-me">where else can you find me?</p>
+      <div class="social-row">
+        <a class="social-icon" href="https://x.com/imvictoriach/" target="_blank" rel="noopener noreferrer" title="X">
+          <img src="assets/rectangle15.png" alt="X" style="height:750.87%;left:-79.33%;top:-96.58%;width:1001.16%" />
+        </a>
+        <a class="social-icon" href="https://www.linkedin.com/in/chernobayv/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+          <img src="assets/rectangle15.png" alt="LinkedIn" style="height:671.78%;left:-275.31%;top:-94.16%;width:895.7%" />
+        </a>
+        <a class="social-icon" href="https://www.instagram.com/imvictoriach" target="_blank" rel="noopener noreferrer" title="Instagram">
+          <img src="assets/rectangle15.png" alt="Instagram" style="height:478.95%;left:-328.24%;top:-46.77%;width:638.6%" />
+        </a>
+        <a class="social-icon" href="https://github.com/chernobayv" target="_blank" rel="noopener noreferrer" title="GitHub">
+          <img src="assets/rectangle15.png" alt="GitHub" style="height:358.05%;left:-349.04%;top:-38.91%;width:477.4%" />
+        </a>
+      </div>
+      <p class="credit">Portfolio made with figma, java, html, css &amp; handdrawn by me! With some help from figma make and framer</p>
+      <div class="signature">
+        <img src="assets/rectangle22.png" alt="" />
+      </div>
+      <div class="bottom-pad"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ===== DRAGGABLE IMAGE GRID ===== */
+const GRID_W = 597, GRID_H = 620;
+const photos = [
+  { id:'r3',  src:'assets/rectangle3.png',  x:0,     y:0,      ow:247.977, oh:171.764, rot:-4.01, iw:237.69,  ih:155.537, bg:true, imgH:'95.04%',  imgL:'1.35%',    imgT:'2.42%',    imgW:'97.31%' },
+  { id:'r4',  src:'assets/rectangle4.png',  x:364,   y:14,     ow:233,     oh:165.657, rot:3.45,  iw:224.235, ih:152.443, bg:true, imgH:'95.04%',  imgL:'1.35%',    imgT:'2.42%',    imgW:'97.31%' },
+  { id:'r5',  src:'assets/rectangle5.png',  x:79,    y:255,    ow:182.158, oh:232.181, rot:3.45,  iw:169.084, ih:222.411, bg:true, imgH:'94.64%',  imgL:'3.82%',    imgT:'2.91%',    imgW:'93.79%' },
+  { id:'r8',  src:'assets/rectangle8.png',  x:23,    y:136,    ow:216.706, oh:169.475, rot:-7.21, iw:200.022, ih:145.519, bg:true, imgH:'95.04%',  imgL:'1.35%',    imgT:'2.42%',    imgW:'97.31%' },
+  { id:'r9',  src:'assets/rectangle9.png',  x:184.78,y:20.17,  ow:194.644, oh:151.096, rot:6.39,  iw:181.103, ih:131.755, bg:true, imgH:'95.04%',  imgL:'1.35%',    imgT:'2.42%',    imgW:'97.31%' },
+  { id:'r10', src:'assets/rectangle10.png', x:262.46,y:323.34, ow:156.37,  oh:118.219, rot:6.39,  iw:145.854, ih:102.621, bg:true, cover:true, bPx:3, bIn:'-3px' },
+  { id:'r11', src:'assets/rectangle11.png', x:263,   y:443,    ow:119.595, oh:122.61,  rot:-8.49, iw:104.753, ih:108.336, bg:true, imgH:'242.41%', imgL:'-6.31%',   imgT:'-90.41%',  imgW:'115.94%', bPx:3, bIn:'0px' },
+  { id:'r12', src:'assets/rectangle12.png', x:350,   y:165,    ow:246.79,  oh:186.764, rot:-3.72, iw:236.13,  ih:171.788, bg:true, imgH:'228.07%', imgL:'-0.19%',   imgT:'-108.58%', imgW:'124.39%', bPx:5, bIn:'0px' },
+  { id:'r6',  src:'assets/rectangle6.png',  x:389,   y:384,    ow:198.98,  oh:207.046, rot:6.62,  iw:178.52,  ih:187.708, bg:true, imgH:'211%',    imgL:'2.01%',    imgT:'-38.28%',  imgW:'96%' },
+  { id:'r7',  src:'assets/rectangle7.png',  x:3,     y:416,    ow:205.94,  oh:168.79,  rot:-12.85,iw:181.166, ih:131.801, bg:true, imgH:'95.04%',  imgL:'1.35%',    imgT:'2.42%',    imgW:'97.31%' },
+  { id:'orpheus', src:'assets/orpheus.png',       x:170, y:443, ow:119.2,  oh:129.935, rot:9.27,  iw:102, ih:115, sticker:true },
+  { id:'first',   src:'assets/first-sticker.png', x:289, y:131, ow:115.713,oh:117.282, rot:11.31, iw:98,  ih:100, sticker:true },
+];
+
+const grid = document.getElementById('dragGrid');
+const positions = {};
+const zOrder = photos.map(p => p.id);
+const elements = {};
+let drag = null;
+
+photos.forEach((p, i) => {
+  positions[p.id] = { x: p.x, y: p.y };
+
+  const el = document.createElement('div');
+  el.className = 'drag-item';
+  el.style.left = p.x + 'px';
+  el.style.top = p.y + 'px';
+  el.style.width = p.ow + 'px';
+  el.style.height = p.oh + 'px';
+  el.style.zIndex = i + 1;
+
+  const inner = document.createElement('div');
+  inner.className = 'drag-item-inner';
+  inner.style.transform = 'rotate(' + p.rot + 'deg)';
+
+  if (p.sticker) {
+    const frame = document.createElement('div');
+    frame.className = 'sticker-frame';
+    frame.style.width = p.iw + 'px';
+    frame.style.height = p.ih + 'px';
+    const img = document.createElement('img');
+    img.src = p.src; img.alt = ''; img.draggable = false;
+    frame.appendChild(img);
+    inner.appendChild(frame);
+  } else {
+    const frame = document.createElement('div');
+    frame.className = 'photo-frame';
+    frame.style.width = p.iw + 'px';
+    frame.style.height = p.ih + 'px';
+    if (p.bg) {
+      const bg = document.createElement('div');
+      bg.className = 'photo-bg';
+      frame.appendChild(bg);
+    }
+    const clip = document.createElement('div');
+    clip.className = 'photo-clip';
+    const img = document.createElement('img');
+    img.src = p.src; img.alt = ''; img.draggable = false;
+    if (p.cover) {
+      img.className = 'cover';
+    } else {
+      img.style.height = p.imgH;
+      img.style.left = p.imgL;
+      img.style.top = p.imgT;
+      img.style.width = p.imgW;
+    }
+    clip.appendChild(img);
+    frame.appendChild(clip);
+    if (p.bPx != null) {
+      const border = document.createElement('div');
+      border.className = 'photo-border';
+      border.style.inset = p.bIn || '0px';
+      border.style.border = p.bPx + 'px solid #d9d9d9';
+      frame.appendChild(border);
+    }
+    inner.appendChild(frame);
+  }
+
+  el.appendChild(inner);
+  grid.appendChild(el);
+  elements[p.id] = el;
+
+  el.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    drag = { id: p.id, sx: e.clientX, sy: e.clientY, ox: positions[p.id].x, oy: positions[p.id].y, ow: p.ow, oh: p.oh };
+    const idx = zOrder.indexOf(p.id);
+    zOrder.splice(idx, 1);
+    zOrder.push(p.id);
+    zOrder.forEach((id, zi) => { elements[id].style.zIndex = zi + 1; });
+  });
+});
+
+window.addEventListener('mousemove', function(e) {
+  if (!drag) return;
+  const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+  const x = Math.max(-20, Math.min(drag.ox + dx, GRID_W - drag.ow + 20));
+  const y = Math.max(-20, Math.min(drag.oy + dy, GRID_H - drag.oh + 20));
+  positions[drag.id] = { x, y };
+  elements[drag.id].style.left = x + 'px';
+  elements[drag.id].style.top = y + 'px';
+});
+
+window.addEventListener('mouseup', function() { drag = null; });
+
+/* ===== PROJECTS LIST ===== */
+const projects = [
+  { title:'SAP — AutoSort Garbage Can', desc:'Current project: drawings and BOM of an autosort garbage can powered by vision AI.', tags:['SAP','Vision AI','Engineering'], link:'https://docs.google.com/spreadsheets/d/1HPWaT3liXkoYKzSHhO0ctcmRXaRMkVAXguZRBDQQqGs/edit?usp=sharing' },
+  { title:'Vital Groove — Hackathon', desc:"Vision AI project for Valentine's Day, built during a hackathon.", tags:['Vision AI','Hackathon'], link:'https://devpost.com/software/jethelper' },
+  { title:'Personal Website', desc:'My personal portfolio and landing page.', tags:['Web Dev','Design'], link:'https://chernobayv.tech' },
+  { title:'Girls in STEM Event', desc:'Ran the networking and LinkedIn workshop, assisted with setup and running the event for 150 students.', tags:['Community','Leadership'] },
+  { title:'TD Synnex Gala', desc:'Presented in front of people from Microsoft, Google, and other major companies, raising $300K for FIRST + Kids Help Phone.', tags:['Public Speaking','Fundraising'] },
+  { title:'Team Swag', desc:'Made and managed a huge group order for hoodies, buttons, merch, banners, and more for FRC 9262.', tags:['Design','Management'] },
+  { title:'Nowadays.ai', desc:'Built a site that creates personalized event proposals for companies.', tags:['Web Dev','AI'], link:'https://nowadaysdemo.vercel.app/' },
+  { title:'Pacefield — Founding Engineer', desc:'Currently working as a founding engineer for a startup making teens and young adults more active through fitness communities and third spaces.', tags:['Startup','React','Founding Engineer'], link:'https://chernobayv.github.io/pacefield/' },
+];
+
+const linkSvg = '<svg class="link-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+
+const pl = document.getElementById('projectsList');
+projects.forEach(p => {
+  const wrapper = p.link ? document.createElement('a') : document.createElement('div');
+  wrapper.className = 'project-row';
+  if (p.link) { wrapper.href = p.link; wrapper.target = '_blank'; wrapper.rel = 'noopener noreferrer'; }
+  wrapper.innerHTML = '<div style="flex:1;min-width:0"><div class="title-row"><span class="title">' + p.title + '</span>' + (p.link ? linkSvg : '') + '</div><div class="desc">' + p.desc + '</div><div class="tags">' + p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div></div>';
+  pl.appendChild(wrapper);
+});
+const cs = document.createElement('div');
+cs.className = 'coming-soon';
+cs.textContent = 'many many more are coming soon, i love building!';
+pl.appendChild(cs);
+
+/* ===== VICTORIA AI ===== */
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // Replace with your actual Gemini API key
+
+const SYSTEM_PROMPT = `You are Victoria's AI assistant on her portfolio website. You are NOT Victoria — you are her helpful, friendly assistant who knows everything about her background and can answer questions on her behalf. Speak in third person about Victoria (e.g. "Victoria has experience in..." not "I have experience in..."). Be enthusiastic, concise, and helpful.
+
+If someone asks something you genuinely don't know about Victoria, say: "I don't know that — email Victoria at chernobayv05@gmail.com to find out!"
+
+Here is everything you know about Victoria Chernobay:
+
+CONTACT: Email: chernobayv05@gmail.com | LinkedIn: linkedin.com/in/chernobayv | Website: chernobayv.tech | GitHub: github.com/chernobayv
+
+EDUCATION: Toronto Metropolitan University — BEng (Hons) Computer Engineering, Sep 2025 – May 2030
+
+TECHNICAL SKILLS:
+- Hardware & Embedded: NVIDIA dev kit, Arduino, Raspberry Pi, PCB Wiring, Motor Encoders
+- Software & Languages: Java (WPILib), Python (OpenCV, Mediapipe, NumPy), C/C++, Linux, Git/GitHub
+- Tools & Frameworks: SAP BTP, Google Gemini API, GPT-4o API, Blender, Figma
+
+PROFESSIONAL EXPERIENCE:
+
+1. Physical AI Lab Intern — SAP, Toronto (Jan 2026 – Present)
+   - Leading development of industrial "Physical AI" prototypes integrating NVIDIA hardware with DeepSeek LLMs on edge devices (Raspberry Pi)
+   - Optimizing hardware-software communication between Python and C++ components
+   - Executing technical benchmarks for SAP's global physical AI lab, focusing on VLM efficiency in constrained embedded environments
+
+2. Founder & Team Captain — FRC Team 9262, Toronto (Aug 2022 – Jul 2025)
+   - Independently established a FIRST Robotics team, recruiting and leading 100+ students across electrical, mechanical, and software
+   - Secured $60,000 in corporate sponsorships via technical pitches; managed entire team budget and vendor relations
+   - Architected robot's electrical architecture with CAN bus network synchronizing 8+ motor controllers, encoders, and LimeLight vision targeting
+   - Led team to Top 10 National Ranking and Provincial Semi-Finalist in debut season; earned Rookie All-Star Award and Dean's List nomination
+
+3. Engineering Co-op Student — SAP, Toronto (Jan 2024 – Jul 2024)
+   - Built an SAP BTP app with ChatGPT-4o and Google API integration
+   - Presented technical keynote on LLM/API integration at TDSB Teachers Conference for 100+ educators
+   - Supported full-stack debugging and backend API improvements
+
+4. Fundraising Lead — Youth Council, FIRST Robotics Canada (Aug 2024 – Aug 2025)
+   - Delivered keynote at TD Synnex corporate gala, raising $300,000 for youth STEM programs serving 20,000+ students
+
+ENGINEERING PROJECTS:
+
+1. VitalGroove | MakeUofT Hackathon (Feb 2026) — Affective Computing system on NVIDIA Jetson Nano with Mediapipe Pose Estimation and servo-driven dispenser; optimized VLM inference within 4GB RAM
+2. FRC Competition Robot "Crescendo" (2024) — 120lb modular robot with PID control loops in Java
+3. Keep on Cooking — Mechanical Design (Jan 2026) — Conveyor-belt mechanism with Blender 3D animations
+4. Nowadays.ai — Site creating personalized event proposals for companies
+5. Pacefield — Founding engineer for fitness community startup
+6. Personal Website — chernobayv.tech
+7. Minesweeper — Custom built game with instruction manual on GitHub
+
+WHY HACK CLUB: Victoria applied for the Hack Club Gap Year Fellowship. She fits perfectly: positive attitude & entrepreneurial mindset, marketing/community building (100+ person robotics team, events), shipping software & hardware projects, design skills (Figma, Blender, swag), organizing complex logistics (founded team from scratch, Girls in STEM for 150 attendees, $60K budget), and helping people learn (TDSB conference, workshops). She loves building and has shipped real projects with real users.
+
+Keep responses short (2-4 sentences), friendly, and enthusiastic. Use casual language.`;
+
+const FALLBACK = "I don't know that — email Victoria at chernobayv05@gmail.com to find out!";
+const messagesEl = document.getElementById('aiMessages');
+const suggestedEl = document.getElementById('suggestedQ');
+const aiInput = document.getElementById('aiInput');
+let chatHistory = [];
+let aiLoading = false;
+let msgCount = 1;
+
+aiInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') sendMessage(aiInput.value);
+});
+
+async function sendMessage(text) {
+  text = text.trim();
+  if (!text || aiLoading) return;
+  aiInput.value = '';
+  msgCount++;
+
+  // Hide suggested after first user message
+  if (msgCount > 2) suggestedEl.style.display = 'none';
+
+  // User bubble
+  addBubble(text, 'user');
+  chatHistory.push({ role: 'user', parts: [{ text: text }] });
+
+  // Thinking
+  const thinking = addBubble('thinking...', 'thinking');
+  aiLoading = true;
+
+  try {
+    const res = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=' + GEMINI_API_KEY,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: chatHistory,
+          generationConfig: { maxOutputTokens: 65536, temperature: 0.9, topP: 0.95 },
+        }),
+      }
+    );
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || FALLBACK;
+    thinking.remove();
+    addBubble(reply, 'bot');
+    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+  } catch (e) {
+    thinking.remove();
+    addBubble(FALLBACK, 'bot');
+  }
+  aiLoading = false;
+}
+
+function addBubble(text, type) {
+  const row = document.createElement('div');
+  row.className = 'msg ' + type;
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+  row.appendChild(bubble);
+  messagesEl.appendChild(row);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return row;
+}
+</script>
+
+</body>
+</html>
