@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victoria Chernobay — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Micro+5&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="content">
+
+      <!-- Hero banner (rotated notepad image) -->
+      <div class="hero-banner">
+        <div class="hero-banner-inner">
+          <img src="assets/rectangle1.png" alt="Notepad" class="hero-img" />
+        </div>
+      </div>
+
+      <!-- Intro text -->
+      <div class="intro-text">
+        <p>After the hack club interview, I knew I needed to send links to my projects. What better way than to show you what I can do and send them in a custom portfolio?</p>
+        <p style="margin-top:16px;">Scroll to learn more about why im the perfect hacker for the job! :)</p>
+      </div>
+
+      <!-- Small accent image -->
+      <div class="accent-img">
+        <div class="accent-img-inner">
+          <img src="assets/rectangle1.png" alt="" class="accent-crop" />
+        </div>
+      </div>
+
+      <!-- Laptop image -->
+      <div class="laptop-img">
+        <img src="assets/laptop.png" alt="Laptop" />
+      </div>
+
+      <!-- FRC Section text -->
+      <div class="frc-text">
+        <h2 class="frc-title">FRC 9262:</h2>
+        <p>One of my biggest (and favorite) projects would be frc 9262, I single-handedly ran and managed a student-led robotics team with 100+ people in and out, winning rookie of the year in 23' and 10th in the province in 24'</p>
+        <p class="what-did"><br/>what did I do?</p>
+        <ul>
+          <li>founder &amp; president for 3 years</li>
+          <li>ran electrical, computer vision, strategy</li>
+          <li>created swag including hoodie design</li>
+          <li>marketing for club &amp; team meeting</li>
+          <li>helped run the Girls in STEM event running workshops with 150 attendees</li>
+          <li>spoke at the TD Synnex Gala raising $300,000 for FIRST + Kids Help Phone</li>
+        </ul>
+        <p class="move-hint">&lt; move around the images :)</p>
+      </div>
+
+      <!-- Draggable photo grid area -->
+      <div class="photo-grid" id="photoGrid">
+        <img src="assets/rect3.png" alt="" class="draggable-photo" style="left:0;top:0;width:248px;transform:rotate(-4.01deg);" data-id="r3" />
+        <img src="assets/rect4.png" alt="" class="draggable-photo" style="left:364px;top:14px;width:233px;transform:rotate(3.45deg);" data-id="r4" />
+        <img src="assets/rect5.png" alt="" class="draggable-photo" style="left:79px;top:255px;width:182px;transform:rotate(3.45deg);" data-id="r5" />
+        <img src="assets/rect8.png" alt="" class="draggable-photo" style="left:23px;top:136px;width:217px;transform:rotate(-7.21deg);" data-id="r8" />
+        <img src="assets/rect9.png" alt="" class="draggable-photo" style="left:185px;top:20px;width:195px;transform:rotate(6.39deg);" data-id="r9" />
+        <img src="assets/rect10.png" alt="" class="draggable-photo" style="left:262px;top:323px;width:156px;transform:rotate(6.39deg);" data-id="r10" />
+        <img src="assets/rect11.png" alt="" class="draggable-photo" style="left:263px;top:443px;width:120px;transform:rotate(-8.49deg);" data-id="r11" />
+        <img src="assets/rect12.png" alt="" class="draggable-photo" style="left:350px;top:165px;width:247px;transform:rotate(-3.72deg);" data-id="r12" />
+        <img src="assets/rect6.png" alt="" class="draggable-photo" style="left:389px;top:384px;width:199px;transform:rotate(6.62deg);" data-id="r6" />
+        <img src="assets/rect7.png" alt="" class="draggable-photo" style="left:3px;top:416px;width:206px;transform:rotate(-12.85deg);" data-id="r7" />
+        <img src="assets/orpheus.png" alt="" class="draggable-photo" style="left:170px;top:443px;width:119px;transform:rotate(9.27deg);" data-id="orpheus" />
+        <img src="assets/first-sticker.png" alt="" class="draggable-photo" style="left:289px;top:131px;width:116px;transform:rotate(11.31deg);" data-id="first" />
+      </div>
+
+      <!-- Computer / Minesweeper section -->
+      <div class="game-section">
+        <div class="game-bg">
+          <img src="assets/computer.png" alt="Computer" />
+        </div>
+        <div class="game-box">
+          <iframe src="https://minesweeper--chernobayv05.replit.app" width="100%" height="100%" style="border:none;" title="Minesweeper"></iframe>
+        </div>
+        <a href="https://github.com/chernobayv/minesweeper/blob/main/ChernobayVictoriaInstructionManual.pdf" target="_blank" class="github-btn">open github</a>
+      </div>
+
+      <!-- MINESWEEPER title image -->
+      <div class="minesweeper-title">
+        <img src="assets/minesweeper-text.png" alt="MINESWEEPER" />
+      </div>
+
+      <!-- Projects + Victoria AI side by side -->
+      <div class="two-col">
+        <div class="projects-box">
+          <h3 class="section-header-title">Projects</h3>
+          <p class="section-header-sub">click a card to learn more</p>
+          <div class="project-grid">
+            <a href="https://docs.google.com/spreadsheets/d/1HPWaT3liXkoYKzSHhO0ctcmRXaRMkVAXguZRBDQQqGs/edit?usp=sharing" target="_blank" class="project-card">
+              <h4>SAP — AutoSort Garbage Can</h4>
+              <p>Current project: drawings and BOM of an autosort garbage can with vision AI.</p>
+              <div class="tags"><span>SAP</span><span>Vision AI</span><span>Engineering</span></div>
+            </a>
+            <a href="https://devpost.com/software/jethelper" target="_blank" class="project-card">
+              <h4>Vital Groove — Hackathon</h4>
+              <p>Vision AI project for Valentine's Day, built during a hackathon.</p>
+              <div class="tags"><span>Vision AI</span><span>Hackathon</span></div>
+            </a>
+            <a href="https://chernobayv.tech" target="_blank" class="project-card">
+              <h4>Personal Website</h4>
+              <p>My personal portfolio and landing page.</p>
+              <div class="tags"><span>Web Dev</span><span>Design</span></div>
+            </a>
+            <div class="project-card">
+              <h4>Girls in STEM Event</h4>
+              <p>Ran networking and LinkedIn workshop, assisted with setup for 150 students.</p>
+              <div class="tags"><span>Community</span><span>Leadership</span></div>
+            </div>
+            <div class="project-card">
+              <h4>TD Synnex Gala</h4>
+              <p>Presented in front of people from Microsoft, Google, raising $300K for FIRST.</p>
+              <div class="tags"><span>Public Speaking</span><span>Fundraising</span></div>
+            </div>
+            <div class="project-card">
+              <h4>Team Swag</h4>
+              <p>Managed group orders for hoodies, buttons, merch, banners for FRC 9262.</p>
+              <div class="tags"><span>Design</span><span>Management</span></div>
+            </div>
+            <a href="https://nowadaysdemo.vercel.app/" target="_blank" class="project-card">
+              <h4>Nowadays.ai</h4>
+              <p>Built a site creating personalized event proposals for companies.</p>
+              <div class="tags"><span>Web Dev</span><span>AI</span></div>
+            </a>
+            <a href="https://chernobayv.github.io/pacefield/" target="_blank" class="project-card">
+              <h4>Pacefield — Founding Engineer</h4>
+              <p>Startup making teens more active through fitness communities.</p>
+              <div class="tags"><span>Startup</span><span>React</span></div>
+            </a>
+          </div>
+        </div>
+        <div class="victoria-box">
+          <h3 class="section-header-title">Victoria.ai</h3>
+          <p class="section-header-sub">trained on my resume, projects & job descriptions</p>
+          <div class="chat-area" id="chatArea">
+            <div class="bot-msg">Hey! I'm Victoria AI — ask me anything about Victoria's experience, skills, or projects!</div>
+          </div>
+          <div class="suggested-qs" id="suggestedQs">
+            <button onclick="sendMsg('What are your skills?')">What are your skills?</button>
+            <button onclick="sendMsg('Tell me about FRC')">Tell me about FRC</button>
+            <button onclick="sendMsg('Why Hack Club?')">Why Hack Club?</button>
+            <button onclick="sendMsg('Current projects?')">Current projects?</button>
+          </div>
+          <div class="chat-input-wrap">
+            <input type="text" id="chatInput" placeholder="ask me anything... (press enter)" onkeydown="if(event.key==='Enter')sendMsg(this.value)" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer — all centered -->
+      <div class="footer">
+        <p class="footer-heading">where else can you find me?</p>
+        <div class="social-row">
+          <a href="https://x.com/imvictoriach/" target="_blank" class="social-icon">
+            <img src="assets/social-icons.png" alt="X" style="height:750.87%;left:-79.33%;top:-96.58%;width:1001.16%;" />
+          </a>
+          <a href="https://www.linkedin.com/in/chernobayv/" target="_blank" class="social-icon">
+            <img src="assets/social-icons.png" alt="LinkedIn" style="height:671.78%;left:-275.31%;top:-94.16%;width:895.7%;" />
+          </a>
+          <a href="https://www.instagram.com/imvictoriach" target="_blank" class="social-icon">
+            <img src="assets/social-icons.png" alt="Instagram" style="height:478.95%;left:-328.24%;top:-46.77%;width:638.6%;" />
+          </a>
+          <a href="https://github.com/chernobayv" target="_blank" class="social-icon">
+            <img src="assets/social-icons.png" alt="GitHub" style="height:358.05%;left:-349.04%;top:-38.91%;width:477.4%;" />
+          </a>
+        </div>
+        <p class="footer-text">Portfolio made with figma, java, html, css &amp; handdrawn by me! With some help from figma make and framer</p>
+        <div class="signature">
+          <img src="assets/signature.png" alt="Victoria signature" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ── Draggable photos ──────────────────────────────────────────────────────
+    (function () {
+      const grid = document.getElementById('photoGrid');
+      const photos = grid.querySelectorAll('.draggable-photo');
+      let drag = null;
+      let maxZ = photos.length;
+
+      photos.forEach(p => {
+        p.addEventListener('mousedown', function (e) {
+          e.preventDefault();
+          const rect = p.getBoundingClientRect();
+          drag = { el: p, offX: e.clientX - rect.left, offY: e.clientY - rect.top };
+          p.style.zIndex = ++maxZ;
+          p.style.cursor = 'grabbing';
+        });
+      });
+
+      document.addEventListener('mousemove', function (e) {
+        if (!drag) return;
+        const gridRect = grid.getBoundingClientRect();
+        let x = e.clientX - gridRect.left - drag.offX;
+        let y = e.clientY - gridRect.top - drag.offY;
+        x = Math.max(-20, Math.min(x, grid.offsetWidth - drag.el.offsetWidth + 20));
+        y = Math.max(-20, Math.min(y, grid.offsetHeight - drag.el.offsetHeight + 20));
+        drag.el.style.left = x + 'px';
+        drag.el.style.top = y + 'px';
+      });
+
+      document.addEventListener('mouseup', function () {
+        if (drag) { drag.el.style.cursor = 'grab'; drag = null; }
+      });
+    })();
+
+    // ── Victoria AI — Gemini 2.5 Pro ─────────────────────────────────────────
+    const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // ← replace with your key
+
+    const SYSTEM_PROMPT = `You are Victoria AI, a friendly chatbot on Victoria Chernobay's portfolio website. You are trained on her resume, projects, and experience. Here is what you know:
+
+- Victoria founded FRC 9262, a student-led robotics team with 100+ people, and was president for 3 years
+- She ran electrical, computer vision, and strategy for the team
+- Rookie of the Year in '23, 10th in province in '24
+- She spoke at the TD Synnex Gala raising $300,000 for FIRST + Kids Help Phone, presenting in front of people from Microsoft, Google, and other big companies
+- She ran the Girls in STEM event — networking and LinkedIn workshops for 150 students
+- She designed team swag: hoodies, buttons, merch, banners
+- Skills: Java, JavaScript, HTML/CSS, React, TypeScript, Python, OpenCV, robotics, electrical systems, team leadership, event management, marketing, Figma, graphic design
+- Current project at SAP: Physical AI Lab internship — drawings and BOM of an autosort garbage can with vision AI; also working with NVIDIA Jetson Nano, C++, real-time pose estimation
+- Vital Groove hackathon: vision AI project for Valentine's Day
+- Personal website: chernobayv.tech
+- Nowadays.ai: built a site creating personalized event proposals for companies
+- Currently working as a founding engineer for Pacefield — a startup making teens and young adults more active through fitness communities
+- She is pursuing a Summer 2026 internship at Relling (YC S25), a startup focused on Embodied AI
+- She loves building things and is passionate about Hack Club
+
+Keep responses short, friendly, and enthusiastic. If you don't know something about Victoria, say: "I don't know that, email Victoria to find out! victoria@chernobayv.tech"`;
+
+    // Full conversation history for multi-turn context
+    const conversationHistory = [];
+    let msgCount = 1;
+    let isLoading = false;
+
+    async function callGemini(userText) {
+      // Add user turn to history
+      conversationHistory.push({
+        role: 'user',
+        parts: [{ text: userText }]
+      });
+
+      const body = {
+        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        contents: conversationHistory,
+        generationConfig: {
+          maxOutputTokens: 65536,   // Max available for Gemini 2.5 Pro
+          temperature: 0.9,
+          topP: 0.95,
+        }
+      };
+
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || 'API error');
+      }
+
+      const data = await res.json();
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text
+        ?? "I don't know that, email Victoria to find out! victoria@chernobayv.tech";
+
+      // Add assistant turn to history for future context
+      conversationHistory.push({
+        role: 'model',
+        parts: [{ text: reply }]
+      });
+
+      return reply;
+    }
+
+    function appendMsg(text, cls) {
+      const area = document.getElementById('chatArea');
+      const div = document.createElement('div');
+      div.className = cls;
+      div.textContent = text;
+      area.appendChild(div);
+      area.scrollTop = area.scrollHeight;
+      return div;
+    }
+
+    async function sendMsg(text) {
+      if (!text || !text.trim() || isLoading) return;
+      isLoading = true;
+
+      const input = document.getElementById('chatInput');
+      input.value = '';
+      msgCount++;
+
+      if (msgCount > 2) {
+        const sq = document.getElementById('suggestedQs');
+        if (sq) sq.style.display = 'none';
+      }
+
+      appendMsg(text, 'user-msg');
+
+      // Show typing indicator
+      const typing = appendMsg('thinking...', 'bot-msg typing-indicator');
+
+      try {
+        const reply = await callGemini(text);
+        typing.remove();
+        appendMsg(reply, 'bot-msg');
+      } catch (e) {
+        typing.remove();
+        appendMsg("I don't know that, email Victoria to find out! victoria@chernobayv.tech", 'bot-msg');
+      }
+
+      isLoading = false;
+    }
+  </script>
+</body>
+</html>
