@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victoria Chernobay — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Micro+5&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #1c1c1c; color: #fff; font-family: 'Libre Baskerville', serif; overflow-x: hidden; }
+    ul { list-style: disc; padding-left: 22px; }
+    ul li { margin-bottom: 2px; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1c1c1c; }
+    ::-webkit-scrollbar-thumb { background: #0055ff44; border-radius: 3px; }
+    input:focus { outline: none; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback, useRef } = React;
+
+    /* ── ASSET MAP ─────────────────────────────────────────────── */
+    const A = {
+      laptop:    'assets/a0b79572e3ab20f90f163e3869b3b3343bad538f.png',
+      banner:    'assets/041b2ecc686b9b8a941df9633a61ba324ba20b7f.png',
+      r3:        'assets/23c8ce0ed56ad1c46fc082b99ab21776b5998244.png',
+      r4:        'assets/8fec549ee59961956bb06e58cfd6ac09bbbc05a5.png',
+      r5:        'assets/bfffe657676548c91148732c2616f59cc8a94456.png',
+      r8:        'assets/1e3fdb351c2f0fbc6f6451b2fc1fa69c7e5a7ab5.png',
+      r9:        'assets/a58cecb386e2cf2be3cf37a6c8f4cc3b1249b548.png',
+      r10:       'assets/1dbf2924a56d181236b26e0d9f822d17920c0816.png',
+      r11:       'assets/cf81a5e82ecb23f56a2d306060bcd71ba7a6dd13.png',
+      r12:       'assets/76b00779a96dacfb5f3ace14cbe44a8b57ac8c6e.png',
+      r6:        'assets/bbdca5405b5ec315b0b5cac0283212740f925695.png',
+      r7:        'assets/2c265214322b426384d1d8c38ff6415679b2d0dd.png',
+      orpheus:   'assets/dda44f08c2f529dc432b51c3a4e99c5c59607f08.png',
+      first:     'assets/f162ddb621d38e78a00fbf851850bf9fa945961e.png',
+      minebg:    'assets/43d7500486bcea0a03cf77bc5cadb2a6977e4fd5.png',
+      sectiontitle: 'assets/8da636cd48757d7d2dfc98cf320facd8a339fad9.png',
+      socialstrip:  'assets/d43ea4e36fb5faeae13cd4fd494284c83b434eb4.png',
+      footerimg:    'assets/07a1428728f3386f87417370f84b746ef950a690.png',
+    };
+
+    /* ── DRAGGABLE GRID ────────────────────────────────────────── */
+    const photos = [
+      { id:'r3',  src:A.r3,  alt:'FRC', initialX:0,      initialY:0,      outerW:247.977, outerH:171.764, rotation:-4.01,  innerW:237.69,  innerH:155.537, hasBg:true, imgH:'95.04%', imgL:'1.35%',   imgT:'2.42%',    imgW:'97.31%' },
+      { id:'r4',  src:A.r4,  alt:'FRC', initialX:364,    initialY:14,     outerW:233,     outerH:165.657, rotation:3.45,   innerW:224.235, innerH:152.443, hasBg:true, imgH:'95.04%', imgL:'1.35%',   imgT:'2.42%',    imgW:'97.31%' },
+      { id:'r5',  src:A.r5,  alt:'FRC', initialX:79,     initialY:255,    outerW:182.158, outerH:232.181, rotation:3.45,   innerW:169.084, innerH:222.411, hasBg:true, imgH:'94.64%', imgL:'3.82%',   imgT:'2.91%',    imgW:'93.79%' },
+      { id:'r8',  src:A.r8,  alt:'FRC', initialX:23,     initialY:136,    outerW:216.706, outerH:169.475, rotation:-7.21,  innerW:200.022, innerH:145.519, hasBg:true, imgH:'95.04%', imgL:'1.35%',   imgT:'2.42%',    imgW:'97.31%' },
+      { id:'r9',  src:A.r9,  alt:'FRC', initialX:184.78, initialY:20.17,  outerW:194.644, outerH:151.096, rotation:6.39,   innerW:181.103, innerH:131.755, hasBg:true, imgH:'95.04%', imgL:'1.35%',   imgT:'2.42%',    imgW:'97.31%' },
+      { id:'r10', src:A.r10, alt:'FRC', initialX:262.46, initialY:323.34, outerW:156.37,  outerH:118.219, rotation:6.39,   innerW:145.854, innerH:102.621, hasBg:true, useCover:true, borderPx:3, borderInset:'-3px' },
+      { id:'r11', src:A.r11, alt:'FRC', initialX:263,    initialY:443,    outerW:119.595, outerH:122.61,  rotation:-8.49,  innerW:104.753, innerH:108.336, hasBg:true, imgH:'242.41%',imgL:'-6.31%',  imgT:'-90.41%',  imgW:'115.94%', borderPx:3, borderInset:'0px' },
+      { id:'r12', src:A.r12, alt:'FRC', initialX:350,    initialY:165,    outerW:246.79,  outerH:186.764, rotation:-3.72,  innerW:236.13,  innerH:171.788, hasBg:true, imgH:'228.07%',imgL:'-0.19%',  imgT:'-108.58%', imgW:'124.39%', borderPx:5, borderInset:'0px' },
+      { id:'r6',  src:A.r6,  alt:'FRC', initialX:389,    initialY:384,    outerW:198.98,  outerH:207.046, rotation:6.62,   innerW:178.52,  innerH:187.708, hasBg:true, imgH:'211%',   imgL:'2.01%',   imgT:'-38.28%',  imgW:'96%' },
+      { id:'r7',  src:A.r7,  alt:'FRC', initialX:3,      initialY:416,    outerW:205.94,  outerH:168.79,  rotation:-12.85, innerW:181.166, innerH:131.801, hasBg:true, imgH:'95.04%', imgL:'1.35%',   imgT:'2.42%',    imgW:'97.31%' },
+      { id:'orpheus', src:A.orpheus, alt:'Orpheus sticker', initialX:170, initialY:443, outerW:119.2,   outerH:129.935, rotation:9.27,   innerW:102, innerH:115, isSticker:true },
+      { id:'first',   src:A.first,   alt:'FIRST sticker',   initialX:289, initialY:131, outerW:115.713, outerH:117.282, rotation:11.31,  innerW:98,  innerH:100, isSticker:true },
+    ];
+
+    const GRID_LEFT = 108, GRID_W = 597, GRID_H = 620;
+
+    function DraggableGrid() {
+      const [positions, setPositions] = useState(() => {
+        const init = {};
+        photos.forEach(p => { init[p.id] = { x: p.initialX, y: p.initialY }; });
+        return init;
+      });
+      const [zOrder, setZOrder] = useState(photos.map(p => p.id));
+      const dragRef = useRef(null);
+
+      const onMouseDown = useCallback((e, photo) => {
+        e.preventDefault();
+        const pos = positions[photo.id];
+        dragRef.current = { id: photo.id, startX: e.clientX, startY: e.clientY, origX: pos.x, origY: pos.y, outerW: photo.outerW, outerH: photo.outerH };
+        setZOrder(prev => [...prev.filter(id => id !== photo.id), photo.id]);
+      }, [positions]);
+
+      useEffect(() => {
+        const onMove = e => {
+          if (!dragRef.current) return;
+          const { id, startX, startY, origX, origY, outerW, outerH } = dragRef.current;
+          const x = Math.max(0, Math.min(origX + e.clientX - startX, GRID_W - outerW));
+          const y = Math.max(0, Math.min(origY + e.clientY - startY, GRID_H - outerH));
+          setPositions(prev => ({ ...prev, [id]: { x, y } }));
+        };
+        const onUp = () => { dragRef.current = null; };
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+      }, []);
+
+      return (
+        <div style={{ position:'absolute', left:GRID_LEFT, top:0, width:GRID_W, height:GRID_H, overflow:'hidden' }}>
+          {zOrder.map((id, zIdx) => {
+            const p = photos.find(ph => ph.id === id);
+            const pos = positions[id];
+            return (
+              <div key={id} onMouseDown={e => onMouseDown(e, p)}
+                style={{ position:'absolute', left:pos.x, top:pos.y, width:p.outerW, height:p.outerH, zIndex:zIdx+1, cursor:'grab', display:'flex', alignItems:'center', justifyContent:'center', userSelect:'none' }}>
+                <div style={{ flexShrink:0, transform:`rotate(${p.rotation}deg)` }}>
+                  {p.isSticker ? (
+                    <div style={{ position:'relative', width:p.innerW, height:p.innerH }}>
+                      <img src={p.src} alt={p.alt} draggable={false} style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', pointerEvents:'none', maxWidth:'none' }} />
+                    </div>
+                  ) : (
+                    <div style={{ position:'relative', width:p.innerW, height:p.innerH }}>
+                      <div style={{ position:'absolute', inset:0, pointerEvents:'none' }}>
+                        {p.hasBg && <div style={{ position:'absolute', inset:0, background:'#d9d9d9' }} />}
+                        <div style={{ position:'absolute', inset:0, overflow:'hidden' }}>
+                          {p.useCover
+                            ? <img src={p.src} alt={p.alt} draggable={false} style={{ width:'100%', height:'100%', objectFit:'cover', pointerEvents:'none' }} />
+                            : <img src={p.src} alt={p.alt} draggable={false} style={{ position:'absolute', height:p.imgH, left:p.imgL, top:p.imgT, width:p.imgW, maxWidth:'none', pointerEvents:'none' }} />
+                          }
+                        </div>
+                      </div>
+                      {p.borderPx != null && (
+                        <div style={{ position:'absolute', inset:p.borderInset??'0px', border:`${p.borderPx}px solid #d9d9d9`, pointerEvents:'none' }} />
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    /* ── MINESWEEPER (Java code shell) ─────────────────────────── */
+    function Minesweeper() {
+      return (
+        <div style={{ height:'100%', width:'100%', display:'flex', flexDirection:'column', background:'#1a1a1a', fontFamily:'monospace', overflow:'hidden' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:8, padding:'8px 16px', background:'#2d2d2d', borderBottom:'1px solid #444' }}>
+            <div style={{ display:'flex', gap:6 }}>
+              <span style={{ width:12, height:12, borderRadius:'50%', background:'#ff5f56', display:'block' }} />
+              <span style={{ width:12, height:12, borderRadius:'50%', background:'#ffbd2e', display:'block' }} />
+              <span style={{ width:12, height:12, borderRadius:'50%', background:'#27c93f', display:'block' }} />
+            </div>
+            <span style={{ color:'#888', fontSize:12, marginLeft:8 }}>Minesweeper.java</span>
+          </div>
+          <div style={{ display:'flex', flex:1, overflow:'auto' }}>
+            <div style={{ textAlign:'right', paddingRight:16, paddingTop:16, paddingBottom:16, paddingLeft:16, color:'#555', fontSize:12, lineHeight:'24px', minWidth:'3rem', background:'#1a1a1a', userSelect:'none' }}>
+              {Array.from({ length: 24 }, (_, i) => <div key={i+1}>{i+1}</div>)}
+            </div>
+            <div style={{ paddingTop:16, paddingBottom:16, paddingRight:16, fontSize:12, lineHeight:'24px', flex:1, overflow:'auto' }}>
+              <div><span style={{ color:'#888' }}>// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></div>
+              <div><span style={{ color:'#888' }}>// ✦  Minesweeper — coming soon in Java  ✦</span></div>
+              <div><span style={{ color:'#888' }}>// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></div>
+              <div>&nbsp;</div>
+              <div><span style={{ color:'#c792ea' }}>public class </span><span style={{ color:'#82aaff' }}>Minesweeper </span><span style={{ color:'#89ddff' }}>{`{`}</span></div>
+              <div>&nbsp;</div>
+              <div><span style={{ color:'#888' }}>&nbsp;&nbsp;// TODO: grid setup</span></div>
+              <div><span style={{ color:'#888' }}>&nbsp;&nbsp;// TODO: mine placement</span></div>
+              <div><span style={{ color:'#888' }}>&nbsp;&nbsp;// TODO: reveal logic</span></div>
+              <div><span style={{ color:'#888' }}>&nbsp;&nbsp;// TODO: flag system</span></div>
+              <div><span style={{ color:'#888' }}>&nbsp;&nbsp;// TODO: win / lose check</span></div>
+              <div>&nbsp;</div>
+              <div><span style={{ color:'#c792ea' }}>&nbsp;&nbsp;public static void </span><span style={{ color:'#82aaff' }}>main</span><span style={{ color:'#89ddff' }}>(</span><span style={{ color:'#ffcb6b' }}>String</span><span style={{ color:'#fff' }}>[] args</span><span style={{ color:'#89ddff' }}>)</span><span style={{ color:'#89ddff' }}> {`{`}</span></div>
+              <div><span style={{ color:'#888' }}>&nbsp;&nbsp;&nbsp;&nbsp;// 🚩 your code here</span></div>
+              <div><span style={{ color:'#89ddff' }}>&nbsp;&nbsp;{`}`}</span></div>
+              <div>&nbsp;</div>
+              <div><span style={{ color:'#89ddff' }}>{`}`}</span></div>
+              <div>&nbsp;</div>
+              <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                <span style={{ display:'inline-block', width:8, height:16, background:'#0055ff', animation:'blink 1s step-end infinite' }} />
+              </div>
+              <div>&nbsp;</div>
+              <div>&nbsp;</div>
+              <div><span style={{ color:'#555' }}>{'// paste your .java file here :)'}</span></div>
+            </div>
+          </div>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'4px 16px', background:'#0055ff', color:'#fff', fontSize:10 }}>
+            <span>Java</span><span>placeholder — game coming soon</span><span>UTF-8</span>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── PROJECTS GRID ─────────────────────────────────────────── */
+    const projects = [
+      { id:'1', title:'FRC 9262', description:"Founded & led a 100+ person student robotics team for 3 years. Managed electrical, computer vision, and strategy. Rookie of the Year '23, 10th in province '24.", tags:['Robotics','Java','Computer Vision','Leadership'], link:'https://github.com', year:'2022–25' },
+      { id:'2', title:'Computer Vision System', description:'Built autonomous target-detection and robot navigation using OpenCV for FRC competition robots.', tags:['Python','OpenCV','ML'], year:'2024' },
+      { id:'3', title:'Girls in STEM Event', description:'Organized and ran workshops for 150+ attendees, promoting STEM education and hands-on robotics.', tags:['Community','Education'], year:'2024' },
+      { id:'4', title:'TD Synnex Gala', description:'Spoke at a major fundraising gala that raised $300,000 for FIRST Robotics and Kids Help Phone.', tags:['Public Speaking','Fundraising'], year:'2024' },
+      { id:'5', title:'Interactive Portfolio', description:'Built this custom portfolio with draggable photos, a Java code shell, and Victoria AI — designed in Figma.', tags:['React','TypeScript','Figma'], link:'#', year:'2025' },
+      { id:'6', title:'Team Swag & Branding', description:'Designed all team branding: hoodies, stickers, marketing materials. Created a recognizable visual identity for FRC 9262.', tags:['Design','Figma','Marketing'], year:'2023' },
+    ];
+
+    function ProjectsGrid() {
+      const [selected, setSelected] = useState(null);
+      const [hovered, setHovered] = useState(null);
+      return (
+        <div style={{ height:'100%', width:'100%', display:'flex', flexDirection:'column', overflow:'hidden', background:'#1c1c1c', border:'2px solid #0055ff', position:'relative' }}>
+          {/* Tab bar */}
+          <div style={{ display:'flex', alignItems:'stretch', borderBottom:'2px solid #0055ff', flexShrink:0, background:'#161616' }}>
+            <div style={{ padding:'10px 20px', borderRight:'1px solid #0055ff44', background:'#1c1c1c', borderBottom:'2px solid #1c1c1c', marginBottom:'-2px' }}>
+              <span style={{ fontFamily:"'Libre Baskerville', serif", fontSize:13, color:'#0055ff' }}>projects.tsx</span>
+            </div>
+            <div style={{ padding:'10px 20px', borderRight:'1px solid #0055ff22', opacity:0.35 }}>
+              <span style={{ fontFamily:"'Libre Baskerville', serif", fontSize:13, color:'#0055ff' }}>resume.pdf</span>
+            </div>
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'flex-end', paddingRight:14 }}>
+              <div style={{ display:'flex', gap:6 }}>
+                <span style={{ width:10, height:10, borderRadius:'50%', background:'#ff5f56', display:'block' }} />
+                <span style={{ width:10, height:10, borderRadius:'50%', background:'#ffbd2e', display:'block' }} />
+                <span style={{ width:10, height:10, borderRadius:'50%', background:'#27c93f', display:'block' }} />
+              </div>
+            </div>
+          </div>
+          {/* Subheader */}
+          <div style={{ padding:'14px 20px 10px', borderBottom:'1px solid #0055ff22', flexShrink:0 }}>
+            <p style={{ fontFamily:"'Micro 5', sans-serif", fontSize:28, color:'#0055ff', margin:0 }}>projects i'm working on</p>
+            <p style={{ fontFamily:"'Libre Baskerville', serif", fontSize:11, color:'#0055ff', opacity:0.5, margin:'3px 0 0 0' }}>click a card to learn more</p>
+          </div>
+          {/* Grid */}
+          <div style={{ flex:1, overflowY:'auto', padding:'16px 18px' }}>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+              {projects.map(p => (
+                <button key={p.id} onClick={() => setSelected(p)} onMouseEnter={() => setHovered(p.id)} onMouseLeave={() => setHovered(null)}
+                  style={{ textAlign:'left', background:hovered===p.id?'#202020':'#181818', border:`1px solid ${hovered===p.id?'#0055ff':'#0055ff2a'}`, borderRadius:0, padding:'12px 14px', cursor:'pointer', transition:'border-color 0.15s, background 0.15s', display:'flex', flexDirection:'column', gap:5, fontFamily:"'Libre Baskerville', serif" }}>
+                  <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:8 }}>
+                    <span style={{ fontSize:13, color:'#fff', lineHeight:1.3 }}>{p.title}</span>
+                    {p.link && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0055ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, marginTop:2 }}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>}
+                  </div>
+                  {p.year && <span style={{ fontSize:10, color:'#0055ff', opacity:0.65 }}>{p.year}</span>}
+                  <p style={{ fontSize:10, color:'#777', margin:0, lineHeight:1.6, display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{p.description}</p>
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:2 }}>
+                    {p.tags.slice(0,3).map((tag,i) => <span key={i} style={{ border:'1px solid #0055ff44', color:'#0055ff', fontSize:9, padding:'1px 6px' }}>{tag}</span>)}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+          {/* Modal */}
+          {selected && (
+            <div style={{ position:'fixed', inset:0, zIndex:50, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(0,0,0,0.82)' }} onClick={() => setSelected(null)}>
+              <div style={{ position:'relative', background:'#1c1c1c', border:'2px solid #0055ff', padding:'30px 32px', maxWidth:480, width:'90%' }} onClick={e => e.stopPropagation()}>
+                <button onClick={() => setSelected(null)} style={{ position:'absolute', top:14, right:14, background:'none', border:'none', cursor:'pointer', padding:4 }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0055ff" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
+                {selected.year && <p style={{ fontFamily:"'Libre Baskerville', serif", fontSize:11, color:'#0055ff', opacity:0.65, marginBottom:4 }}>{selected.year}</p>}
+                <p style={{ fontFamily:"'Micro 5', sans-serif", fontSize:26, color:'#0055ff', marginBottom:12 }}>{selected.title}</p>
+                <p style={{ fontFamily:"'Libre Baskerville', serif", fontSize:13, color:'#ccc', lineHeight:1.65, marginBottom:18 }}>{selected.description}</p>
+                <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:20 }}>
+                  {selected.tags.map((tag,i) => <span key={i} style={{ border:'1px solid #0055ff44', color:'#0055ff', fontFamily:"'Libre Baskerville', serif", fontSize:11, padding:'3px 10px' }}>{tag}</span>)}
+                </div>
+                {selected.link && <a href={selected.link} target="_blank" rel="noopener noreferrer" style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#0055ff', color:'#fff', fontFamily:"'Libre Baskerville', serif", fontSize:12, padding:'9px 20px' }}>view project</a>}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    /* ── VICTORIA AI ───────────────────────────────────────────── */
+    const botResponses = {
+      resume:   "I've got experience founding FRC 9262, leading 100+ people, running electrical + computer vision + strategy, and building this very portfolio. I've also spoken at galas and run STEM events. Want specifics? 👀",
+      projects: "Biggest one: FRC 9262 — rookie of the year in '23, 10th in province in '24. Also built computer vision systems, organized Girls in STEM (150 attendees), designed team swag, and made this interactive portfolio!",
+      skills:   "Java · JavaScript · HTML/CSS · React · TypeScript · Python · OpenCV · robotics programming · electrical systems · team leadership · event management · marketing · Figma · graphic design",
+      frc:      "FRC 9262 is my baby 🤖 I founded it from scratch, ran it for 3 years, handled electrical, computer vision, and strategy — and even spoke at the TD Synnex Gala that raised $300,000 for FIRST + Kids Help Phone.",
+      hack:     "I love building things that actually matter. Whether it's robots, web apps, or community events — I dive deep, lead teams, and ship stuff. Hack Club feels like exactly my kind of people!",
+      default:  "Hey! I'm Victoria AI 👋 I'm trained on Victoria's resume, projects, and experience. Try asking me about: resume, projects, skills, FRC, or hack club!",
+    };
+    const suggestedQs = ['What are your skills?', 'Tell me about FRC', 'Why Hack Club?', 'What projects?'];
+
+    function VictoriaAI() {
+      const [messages, setMessages] = useState([{ id:'0', text:"Hey! I'm Victoria AI 👋 Ask me anything about Victoria's experience, skills, or projects!", sender:'bot' }]);
+      const [input, setInput] = useState('');
+      const [hoveredQ, setHoveredQ] = useState(null);
+      const bottomRef = useRef(null);
+
+      const getResponse = msg => {
+        const m = msg.toLowerCase();
+        if (m.includes('resume')||m.includes('experience')) return botResponses.resume;
+        if (m.includes('project')) return botResponses.projects;
+        if (m.includes('skill')) return botResponses.skills;
+        if (m.includes('frc')||m.includes('robot')) return botResponses.frc;
+        if (m.includes('hack')||m.includes('club')) return botResponses.hack;
+        return botResponses.default;
+      };
+
+      const send = text => {
+        if (!text.trim()) return;
+        setMessages(p => [...p, { id:Date.now().toString(), text, sender:'user' }]);
+        setInput('');
+        setTimeout(() => setMessages(p => [...p, { id:(Date.now()+1).toString(), text:getResponse(text), sender:'bot' }]), 420);
+      };
+
+      useEffect(() => { bottomRef.current?.scrollIntoView({ behavior:'smooth' }); }, [messages]);
+
+      return (
+        <div style={{ height:'100%', width:'100%', display:'flex', flexDirection:'column', overflow:'hidden', background:'#1c1c1c', border:'2px solid #0055ff' }}>
+          {/* Tab bar */}
+          <div style={{ display:'flex', alignItems:'stretch', borderBottom:'2px solid #0055ff', flexShrink:0, background:'#161616' }}>
+            <div style={{ padding:'10px 20px', borderRight:'1px solid #0055ff44', background:'#1c1c1c', borderBottom:'2px solid #1c1c1c', marginBottom:'-2px' }}>
+              <span style={{ fontFamily:"'Libre Baskerville', serif", fontSize:13, color:'#0055ff' }}>victoria.ai</span>
+            </div>
+            <div style={{ padding:'10px 20px', borderRight:'1px solid #0055ff22', opacity:0.35 }}>
+              <span style={{ fontFamily:"'Libre Baskerville', serif", fontSize:13, color:'#0055ff' }}>chat.log</span>
+            </div>
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'flex-end', paddingRight:14 }}>
+              <div style={{ display:'flex', gap:6 }}>
+                <span style={{ width:10, height:10, borderRadius:'50%', background:'#ff5f56', display:'block' }} />
+                <span style={{ width:10, height:10, borderRadius:'50%', background:'#ffbd2e', display:'block' }} />
+                <span style={{ width:10, height:10, borderRadius:'50%', background:'#27c93f', display:'block' }} />
+              </div>
+            </div>
+          </div>
+          {/* Subheader */}
+          <div style={{ padding:'14px 20px 10px', borderBottom:'1px solid #0055ff22', flexShrink:0 }}>
+            <p style={{ fontFamily:"'Micro 5', sans-serif", fontSize:28, color:'#0055ff', margin:0 }}>victoria.ai</p>
+            <p style={{ fontFamily:"'Libre Baskerville', serif", fontSize:11, color:'#0055ff', opacity:0.5, margin:'3px 0 0 0' }}>trained on my resume, projects &amp; job descriptions</p>
+          </div>
+          {/* Messages */}
+          <div style={{ flex:1, overflowY:'auto', padding:'16px 16px 8px', display:'flex', flexDirection:'column', gap:12 }}>
+            {messages.map(msg => (
+              <div key={msg.id} style={{ display:'flex', justifyContent:msg.sender==='user'?'flex-end':'flex-start' }}>
+                <div style={msg.sender==='bot'
+                  ? { background:'#1e1e1e', border:'1px solid #0055ff2a', color:'#cfcfcf', fontFamily:"'Libre Baskerville', serif", fontSize:12, padding:'9px 13px', maxWidth:'88%', lineHeight:1.65 }
+                  : { background:'#0055ff', color:'#fff', fontFamily:"'Libre Baskerville', serif", fontSize:12, padding:'9px 13px', maxWidth:'88%', lineHeight:1.65 }}>
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+            <div ref={bottomRef} />
+          </div>
+          {/* Suggested */}
+          {messages.length <= 2 && (
+            <div style={{ padding:'0 16px 10px', display:'flex', flexWrap:'wrap', gap:6, flexShrink:0 }}>
+              {suggestedQs.map((q,i) => (
+                <button key={i} onClick={() => send(q)} onMouseEnter={() => setHoveredQ(i)} onMouseLeave={() => setHoveredQ(null)}
+                  style={{ background:hoveredQ===i?'#0055ff14':'transparent', border:'1px solid #0055ff44', color:'#0055ff', fontFamily:"'Libre Baskerville', serif", fontSize:10, padding:'4px 10px', cursor:'pointer' }}>
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
+          {/* Input */}
+          <div style={{ padding:'10px 14px', borderTop:'1px solid #0055ff2a', display:'flex', gap:8, flexShrink:0 }}>
+            <input type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key==='Enter'&&send(input)} placeholder="ask me anything..."
+              style={{ flex:1, background:'#181818', border:'1px solid #0055ff33', padding:'8px 12px', color:'#d0d0d0', fontFamily:"'Libre Baskerville', serif", fontSize:12, outline:'none' }} />
+            <button onClick={() => send(input)} style={{ background:'#0055ff', border:'none', padding:'8px 13px', cursor:'pointer', display:'flex', alignItems:'center', flexShrink:0 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── MAIN APP ──────────────────────────────────────────────── */
+    function App() {
+      return (
+        <div style={{ background:'#1c1c1c', width:'100%', maxWidth:'100vw', position:'relative', overflowX:'hidden' }}>
+
+          {/* ── HERO ─────────────────────────────────────────── */}
+          <div style={{ position:'relative', minHeight:673, overflow:'hidden' }}>
+            <div style={{ position:'absolute', left:'50%', top:87, transform:'translateX(80px)', width:609, height:525, display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <div style={{ transform:'rotate(90deg)' }}>
+                <div style={{ height:609, width:525, position:'relative' }}>
+                  <div style={{ position:'absolute', inset:0, overflow:'hidden', pointerEvents:'none' }}>
+                    <img alt="" style={{ position:'absolute', height:'145.94%', left:'-44.19%', maxWidth:'none', top:'-17.67%', width:'225.68%' }} src={A.banner} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style={{ position:'absolute', left:'50%', top:279, width:'min(426px, 44vw)', fontFamily:"'Libre Baskerville', serif", fontSize:'clamp(16px, 1.4vw, 20px)', color:'#0055ff', lineHeight:1.55 }}>
+              <p>After the hack club interview, I knew I needed to send links to my projects. What better way than to show you what I can do and send them in a custom portfolio?</p>
+              <br />
+              <p>Scroll to learn more about why im the perfect hacker for the job! :)</p>
+            </div>
+          </div>
+
+          {/* ── FRC ──────────────────────────────────────────── */}
+          <div style={{ position:'relative', minHeight:700 }}>
+            <div style={{ position:'absolute', height:739, left:47, top:0, width:738, pointerEvents:'none' }}>
+              <img alt="" style={{ position:'absolute', inset:0, maxWidth:'none', objectFit:'cover', width:'100%', height:'100%' }} src={A.laptop} />
+            </div>
+            <DraggableGrid />
+            <div style={{ position:'absolute', left:'55%', top:26, width:'min(430px, 42vw)', fontFamily:"'Libre Baskerville', serif", color:'#0055ff' }}>
+              <p style={{ fontFamily:"'Micro 5', sans-serif", fontSize:'clamp(36px, 3.5vw, 48px)', lineHeight:'normal', margin:0, color:'#0055ff' }}>FRC 9262:</p>
+              <br />
+              <p style={{ fontSize:'clamp(15px, 1.3vw, 20px)', lineHeight:1.55, margin:'0 0 12px 0' }}>
+                One of my biggest (and favorite) projects would be frc 9262, I single-handedly ran and managed a student-led robotics team with 100+ people in and out, winning rookie of the year in 23' and 10th in the province in 24'
+              </p>
+              <p style={{ fontSize:'clamp(15px, 1.3vw, 20px)', margin:'0 0 8px 0' }}>what did I do?</p>
+              <ul style={{ fontSize:'clamp(15px, 1.3vw, 20px)', lineHeight:1.75, paddingLeft:22, margin:0, listStyleType:'disc', listStylePosition:'outside' }}>
+                <li>founder &amp; president for 3 years</li>
+                <li>ran electrical, computer vision, strategy</li>
+                <li>created swag including hoodie design</li>
+                <li>marketing for club &amp; team meeting</li>
+                <li>helped run the Girls in STEM event running workshops with 150 attendees</li>
+                <li>spoke at the TD Synnex Gala raising $300,000 for FIRST + Kids Help Phone</li>
+              </ul>
+              <p style={{ fontSize:'clamp(13px, 1.1vw, 17px)', margin:'16px 0 0 0', opacity:0.7 }}>{'< move around the images :)'}</p>
+            </div>
+          </div>
+
+          {/* ── MINESWEEPER ──────────────────────────────────── */}
+          <div style={{ position:'relative', minHeight:940 }}>
+            <div style={{ position:'absolute', height:874, left:'50%', top:40, transform:'translateX(-50%)', width:804, overflow:'hidden' }}>
+              <img alt="" style={{ position:'absolute', height:'100%', left:'-26.89%', maxWidth:'none', top:0, width:'154.61%', pointerEvents:'none' }} src={A.minebg} />
+            </div>
+            <div style={{ position:'relative', display:'flex', flexDirection:'column', alignItems:'center', paddingTop:74 }}>
+              <div style={{ display:'flex', flexDirection:'column', alignItems:'center', border:'3px solid #0055ff', background:'#111' }}>
+                <div style={{ width:566, height:392 }}>
+                  <Minesweeper />
+                </div>
+                <div style={{ width:'100%', height:1, background:'#0055ff44' }} />
+                <a href="https://github.com/chernobayv/minesweeper/blob/main/ChernobayVictoriaInstructionManual.pdf" target="_blank" rel="noopener noreferrer"
+                  style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'100%', height:52, textDecoration:'none', background:'transparent', cursor:'pointer', transition:'background 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background='#0055ff18'}
+                  onMouseLeave={e => e.currentTarget.style.background='transparent'}>
+                  <span style={{ fontFamily:"'Libre Baskerville', serif", color:'#0055ff', fontSize:18 }}>open github</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* ── PROJECTS + VICTORIA AI ───────────────────────── */}
+          <div style={{ paddingTop:48, paddingBottom:80 }}>
+            <div style={{ display:'flex', justifyContent:'center', marginBottom:40 }}>
+              <div style={{ width:'min(462px, 80vw)', height:62 }}>
+                <img alt="" style={{ maxWidth:'none', objectFit:'cover', width:'100%', height:'100%', pointerEvents:'none' }} src={A.sectiontitle} />
+              </div>
+            </div>
+            <div style={{ display:'flex', justifyContent:'center', gap:24, paddingLeft:40, paddingRight:40, maxWidth:1200, margin:'0 auto', boxSizing:'border-box' }}>
+              <div style={{ flex:'0 0 613px', maxWidth:613, height:675 }}><ProjectsGrid /></div>
+              <div style={{ flex:'0 0 402px', maxWidth:402, height:675 }}><VictoriaAI /></div>
+            </div>
+          </div>
+
+          {/* ── FOOTER ───────────────────────────────────────── */}
+          <footer style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', paddingTop:48, paddingBottom:60, width:'100%', textAlign:'center' }}>
+            <p style={{ fontFamily:"'Libre Baskerville', serif", fontSize:20, color:'white', marginBottom:32 }}>
+              where else can you find me?
+            </p>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:24, marginBottom:48 }}>
+              {[
+                { h:'750.87%', l:'-79.33%',  t:'-96.58%',  w:'1001.16%' },
+                { h:'671.78%', l:'-275.31%', t:'-94.16%',  w:'895.7%' },
+                { h:'478.95%', l:'-328.24%', t:'-46.77%',  w:'638.6%' },
+                { h:'358.05%', l:'-349.04%', t:'-38.91%',  w:'477.4%' },
+              ].map((s,i) => (
+                <div key={i} style={{ width:75, height:75, position:'relative', overflow:'hidden', flexShrink:0 }}>
+                  <img alt="" style={{ position:'absolute', height:s.h, left:s.l, maxWidth:'none', top:s.t, width:s.w, pointerEvents:'none' }} src={A.socialstrip} />
+                </div>
+              ))}
+            </div>
+            <p style={{ fontFamily:"'Libre Baskerville', serif", fontSize:20, color:'white', textAlign:'center', maxWidth:969, lineHeight:1.6, marginBottom:40, padding:'0 20px' }}>
+              Portfolio made with figma, java, html, css &amp; handdrawn by me! With some help from figma make and framer
+            </p>
+            <div style={{ width:'min(592px, 90vw)', height:217, position:'relative', overflow:'hidden' }}>
+              <img alt="" style={{ position:'absolute', height:'280.75%', left:'-7.68%', maxWidth:'none', top:'-145.49%', width:'131.91%', pointerEvents:'none' }} src={A.footerimg} />
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+
+  <style>
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  </style>
+</body>
+</html>
