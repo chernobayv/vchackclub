@@ -53,6 +53,7 @@ a { color: inherit; }
 
 /* ===== INTRO TEXT ===== */
 .intro-text {
+  margin-top: -20px;
   position: absolute;
   left: 427px; top: 279px;
   width: 426px;
