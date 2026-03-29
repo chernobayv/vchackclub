@@ -268,63 +268,67 @@ cs.textContent = 'many many more are coming soon, i love building!';
 pl.appendChild(cs);
 
 /* ===== VICTORIA AI ===== */
-
-body: JSON.stringify({ contents: chatHistory });
-  
 const FALLBACK = "I don't know that — email Victoria at chernobayv05@gmail.com to find out!";
 const messagesEl = document.getElementById('aiMessages');
 const suggestedEl = document.getElementById('suggestedQ');
 const aiInput = document.getElementById('aiInput');
 let chatHistory = [];
 let aiLoading = false;
-let msgCount = 1;
+let msgCount = 0;
 
 aiInput.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') sendMessage(aiInput.value);
+  if (e.key === 'Enter') {
+    sendMessage(aiInput.value);
+    aiInput.value = '';
+  }
 });
 
 async function sendMessage(text) {
   text = text.trim();
   if (!text || aiLoading) return;
-  aiInput.value = '';
+  
   msgCount++;
 
-  // Hide suggested after first user message
-  if (msgCount > 2) suggestedEl.style.display = 'none';
+  // Hide suggested buttons after user interacts
+  if (msgCount > 0) suggestedEl.style.display = 'none';
 
-  // User bubble
+  // Add User bubble
   addBubble(text, 'user');
   chatHistory.push({ role: 'user', parts: [{ text: text }] });
 
-  // Thinking
+  // Add Thinking indicator
   const thinking = addBubble('thinking...', 'thinking');
   aiLoading = true;
 
   try {
-    const res = await fetch(
-      '/api/chat' + GEMINI_API_KEY,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: chatHistory,
-          generationConfig: { maxOutputTokens: 65536, temperature: 0.9, topP: 0.95 },
-        }),
-      }
-    );
+    // Calling your Vercel backend
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: chatHistory })
+    });
+    
     if (!res.ok) throw new Error('API error');
+    
     const data = await res.json();
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || FALLBACK;
+    
+    // Remove thinking indicator and add bot reply
     thinking.remove();
     addBubble(reply, 'bot');
     chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+    
   } catch (e) {
+    console.error("Chat error:", e);
     thinking.remove();
     addBubble(FALLBACK, 'bot');
   }
+  
   aiLoading = false;
 }
+
+// Ensure the button clicks from the suggested questions work properly
+window.sendMessage = sendMessage;
 
 function addBubble(text, type) {
   const row = document.createElement('div');
